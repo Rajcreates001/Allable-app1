@@ -1,0 +1,18 @@
+# This file is the master blueprint for deploying your application on Render.
+services:
+  - type: web
+    name: allable-app
+    runtime: python
+    plan: starter # IMPORTANT: The 'free' plan will not work due to high memory usage.
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.13
+      - key: GRAPHHOPPER_API_KEY
+        value: 3a1e3ad0-ecf0-4d85-a33c-b2835b02e125
+      - key: GEMINI_API_KEY
+        value: AIzaSyDFR-X4UgOxgWwOEqfkiyzxDF3a8WZUtrE
+    buildCommand: |
+      apt-get update && apt-get install -y tesseract-ocr
+      pip install -r backend/requirements.txt
+    startCommand: "gunicorn --chdir backend app:app"

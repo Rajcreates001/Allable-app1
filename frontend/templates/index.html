@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLABLE – One App. All Abilities.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --font-size: 16px;
+            --text-color: #1a3a3a;
+            --primary-color: #0c4b4b;
+            --accent-color: #c0a062;
+        }
+        html.high-contrast {
+            --text-color: #000000;
+            --primary-color: #000000;
+        }
+        html.high-contrast .card-bg {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: var(--font-size);
+            color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+            background: linear-gradient(-45deg, #e0f2f1, #f1f8e9, #ffcdd2, #e0f2f1);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+        .splash-screen {
+            animation: fadeOut 3.5s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        #app-container {
+            transition: opacity 0.5s ease-in;
+        }
+        .card-bg {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            transition: all 0.3s ease;
+        }
+        .profile-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        .modal {
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #083333;
+        }
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-accent:hover {
+            background-color: #a1854e;
+        }
+
+        /* --- New Logo Styles --- */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(135deg, #3498db 0%, #2ecc71 50%, #9b59b6 100%);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        .logo-inner {
+            width: 220px;
+            height: 220px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .symbol {
+            width: 160px;
+            height: 160px;
+            position: relative;
+        }
+        .person {
+            position: absolute;
+            background: #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .person-1 { top: 0; left: 55px; background: #3498db; }
+        .person-2 { top: 55px; right: 0; background: #2ecc71; }
+        .person-3 { bottom: 0; left: 55px; background: #9b59b6; }
+        .person-4 { top: 55px; left: 0; background: #e74c3c; }
+        .connecting-circle {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            border: 4px solid #3498db;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+        }
+        .tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        /* Smaller logo for headers */
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header-logo .logo-inner {
+            width: 40px;
+            height: 40px;
+        }
+        .header-logo .symbol {
+            width: 30px;
+            height: 30px;
+        }
+        .header-logo .person {
+            width: 12px;
+            height: 12px;
+            font-size: 6px;
+        }
+        .header-logo .person-1 { top: 0; left: 9px; }
+        .header-logo .person-2 { top: 9px; right: 0; }
+        .header-logo .person-3 { bottom: 0; left: 9px; }
+        .header-logo .person-4 { top: 9px; left: 0; }
+        .header-logo .connecting-circle {
+            width: 30px;
+            height: 30px;
+            border-width: 1px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="splash-screen" class="splash-screen fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-inner">
+                    <div class="symbol">
+                        <div class="connecting-circle"></div>
+                        <div class="person person-1"><i class="fas fa-wheelchair"></i></div>
+                        <div class="person person-2"><i class="fas fa-ear-deaf"></i></div>
+                        <div class="person person-3"><i class="fas fa-blind"></i></div>
+                        <div class="person person-4"><i class="fas fa-hands"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="logo-text">Allable</div>
+            <div class="tagline">One App. All Abilities.</div>
+        </div>
+    </div>
+
+    <div id="app-container" class="min-h-screen opacity-0">
+        <section id="home-page" class="flex flex-col items-center justify-center min-h-screen p-4">
+             <div class="text-center mb-12 flex items-center justify-center gap-4">
+                <div class="logo header-logo">
+                    <div class="logo-inner">
+                        <div class="symbol">
+                            <div class="connecting-circle"></div>
+                            <div class="person person-1"><i class="fas fa-wheelchair"></i></div>
+                            <div class="person person-2"><i class="fas fa-ear-deaf"></i></div>
+                            <div class="person person-3"><i class="fas fa-blind"></i></div>
+                            <div class="person person-4"><i class="fas fa-hands"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-4xl font-bold">Welcome to ALLABLE</h2>
+                    <p class="text-gray-600 mt-2 text-lg">Please select a profile to continue.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-3xl">
+                <button onclick="selectProfile('visually-impaired')" class="profile-btn card-bg p-8 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4" role="img" aria-label="Eye Icon">👁️</span>
+                    <span class="text-2xl font-semibold">Visually Impaired</span>
+                </button>
+                <button onclick="selectProfile('deaf-or-hard-of-hearing')" class="profile-btn card-bg p-8 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4" role="img" aria-label="Ear Icon">👂</span>
+                    <span class="text-2xl font-semibold">Deaf or Hard of Hearing</span>
+                </button>
+                <button onclick="selectProfile('elderly')" class="profile-btn card-bg p-8 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4" role="img" aria-label="Elderly Person Icon">👴</span>
+                    <span class="text-2xl font-semibold">Elderly</span>
+                </button>
+                <button onclick="selectProfile('illiterate')" class="profile-btn card-bg p-8 rounded-2xl shadow-lg flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4" role="img" aria-label="Document Icon">📝</span>
+                    <span class="text-2xl font-semibold">Illiterate</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="profile-setup-page" class="hidden flex-col items-center justify-center min-h-screen p-4">
+             <div class="flex items-center gap-4 mb-8">
+                <div class="logo header-logo">
+                    <div class="logo-inner"><div class="symbol"><div class="connecting-circle"></div><div class="person person-1"><i class="fas fa-wheelchair"></i></div><div class="person person-2"><i class="fas fa-ear-deaf"></i></div><div class="person person-3"><i class="fas fa-blind"></i></div><div class="person person-4"><i class="fas fa-hands"></i></div></div></div>
+                </div>
+                <h2 class="text-3xl font-bold">Profile Setup</h2>
+            </div>
+            <div class="w-full max-w-md card-bg p-8 rounded-2xl">
+                <div class="mb-6">
+                    <label for="language-select" class="block text-lg font-medium mb-2">Language Preference</label>
+                    <select id="language-select" class="w-full p-3 bg-gray-100 rounded-lg border-2 border-transparent focus:border-teal-500 focus:ring-0">
+                        <option value="en-US">English</option>
+                        <option value="kn-IN">Kannada</option>
+                        <option value="hi-IN">Hindi</option>
+                        <option value="ta-IN">Tamil</option>
+                        <option value="te-IN">Telugu</option>
+                    </select>
+                </div>
+                <button onclick="saveSettings()" class="w-full btn-primary font-bold py-3 px-4 rounded-lg">Save Settings</button>
+            </div>
+        </section>
+
+        <section id="dashboard-page" class="hidden flex-col min-h-screen p-4">
+             <header class="flex justify-between items-center p-4">
+                <div class="flex items-center gap-4">
+                    <div class="logo header-logo">
+                         <div class="logo-inner"><div class="symbol"><div class="connecting-circle"></div><div class="person person-1"><i class="fas fa-wheelchair"></i></div><div class="person person-2"><i class="fas fa-ear-deaf"></i></div><div class="person person-3"><i class="fas fa-blind"></i></div><div class="person person-4"><i class="fas fa-hands"></i></div></div></div>
+                    </div>
+                    <div>
+                        <h2 id="dashboard-title" class="text-3xl font-bold">Dashboard</h2>
+                        <p class="text-gray-600">Your personalized space</p>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="openSettingsModal()" class="text-md font-semibold text-teal-800 hover:underline mr-4">Settings</button>
+                    <button onclick="showHomePage()" class="text-md font-semibold text-teal-800 hover:underline">Change Profile</button>
+                </div>
+            </header>
+            
+            <div id="predictive-shortcut-container" class="p-4 hidden">
+                 <h3 class="font-bold text-lg mb-2">Suggested for you</h3>
+                 <button id="predictive-shortcut-btn" class="w-full bg-teal-100 text-teal-800 p-4 rounded-xl shadow hover:bg-teal-200 transition text-left text-lg"></button>
+            </div>
+
+            <div id="dashboard-content" class="flex-grow grid grid-cols-2 gap-6 p-4"></div>
+            
+            <footer class="p-4">
+                 <button onclick="activateSOS()" class="w-full bg-red-600 text-white font-bold py-5 px-4 rounded-2xl transition duration-300 flex items-center justify-center text-xl shadow-lg hover:bg-red-700">
+                    <span class="mr-3 text-2xl" role="img" aria-label="SOS Icon">🚨</span> SOS Emergency
+                </button>
+            </footer>
+        </section>
+
+        <section id="feature-view-page" class="hidden flex-col min-h-screen">
+            <header class="flex items-center p-6 bg-white/30 backdrop-blur-md">
+                <button onclick="handleFeatureBack()" class="mr-4 text-4xl font-bold text-teal-800 hover:text-teal-600 transition-colors">←</button>
+                 <div class="logo header-logo mr-4">
+                    <div class="logo-inner"><div class="symbol"><div class="connecting-circle"></div><div class="person person-1"><i class="fas fa-wheelchair"></i></div><div class="person person-2"><i class="fas fa-ear-deaf"></i></div><div class="person person-3"><i class="fas fa-blind"></i></div><div class="person person-4"><i class="fas fa-hands"></i></div></div></div>
+                </div>
+                <h2 id="feature-title" class="text-3xl font-bold">Feature</h2>
+            </header>
+            <div id="feature-content" class="flex-grow p-6 overflow-y-auto">
+                </div>
+        </section>
+    </div>
+
+    <div id="settings-modal" class="hidden fixed inset-0 z-40 bg-black bg-opacity-60 flex items-center justify-center p-4 modal">
+        <div class="card-bg w-full max-w-md p-8 rounded-2xl shadow-2xl">
+            <h2 class="text-2xl font-bold mb-6">Accessibility Settings</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="voice-speed" class="block font-medium mb-1">Voice Speed</label>
+                    <input type="range" id="voice-speed" min="0.5" max="2" step="0.1" class="w-full">
+                </div>
+                <div>
+                    <label for="voice-pitch" class="block font-medium mb-1">Voice Pitch</label>
+                    <input type="range" id="voice-pitch" min="0.5" max="2" step="0.1" class="w-full">
+                </div>
+                <div>
+                    <label for="font-size" class="block font-medium mb-1">Font Size</label>
+                    <input type="range" id="font-size" min="12" max="24" step="1" class="w-full">
+                </div>
+                 <div>
+                    <label for="contrast-theme" class="block font-medium mb-1">Contrast</label>
+                    <select id="contrast-theme" class="w-full p-2 bg-gray-100 rounded-lg">
+                        <option value="default">Default</option>
+                        <option value="high-contrast">High Contrast</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end mt-8 space-x-3">
+                <button onclick="closeSettingsModal()" class="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 font-semibold">Cancel</button>
+                <button onclick="saveAccessibilitySettings()" class="px-5 py-2 rounded-lg btn-primary font-semibold">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // THE ONLY CHANGE: The API_BASE_URL is now a relative path,
+        // so it will make calls to the same server that served this file (our new Flask server).
+        const API_BASE_URL = ''; 
+
+        // --- STATE MANAGEMENT ---
+        let appState = {
+            userId: localStorage.getItem('allable-userId') || `user_${Date.now()}`,
+            profile: localStorage.getItem('allable-profile'),
+            settings: { lang: 'en-US', voiceSpeed: 1.0, voicePitch: 1.0, fontSize: 16, contrastTheme: 'default' },
+            reminders: JSON.parse(localStorage.getItem('allable-reminders')) || [],
+            activeFeature: null,
+            cameraStream: null,
+            navigation: {
+                route: [],
+                currentStep: 0
+            },
+            signRecognitionInterval: null,
+            lastSpokenWord: ""
+        };
+        localStorage.setItem('allable-userId', appState.userId);
+
+        // --- DASHBOARD DATA ---
+        const dashboards = {
+            'visually-impaired': { title: 'Visually Impaired Assistance', options: [ { name: 'Image-to-Speech', icon: '📷' }, { name: 'Navigation Aid', icon: '🧭' }, { name: 'Voice Assistant', icon: '🗣️' }, { name: 'Read Document', icon: '📄' } ] },
+            'deaf-or-hard-of-hearing': { title: 'Communication Hub', options: [ { name: 'Speech-to-Text', icon: '🎤' }, { name: 'Sign-to-Speech', icon: '🖐️' }, { name: 'Symbol Chatboard', icon: '📝' }, { name: 'Emergency Alert', icon: '🔔' } ] },
+            'elderly': { title: 'Senior Support', options: [ { name: 'Reminders', icon: '⏰' }, { name: 'Quick Calls', icon: '📞' }, { name: 'Voice News', icon: '📰' }, { name: 'Health Monitor', icon: '❤️' } ] },
+            'illiterate': { title: 'Literacy Aid', options: [ { name: 'Text Translator', icon: '🌐' }, { name: 'Text-to-Icon', icon: '🖼️' }, { name: 'Voice Commands', icon: '🎙️' }, { name: 'Volunteer Connect', icon: '🤝' } ] }
+        };
+
+        // --- SPEECH RECOGNITION SETUP ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.trim().toLowerCase();
+                if (appState.activeFeature === 'Speech-to-Text') {
+                    const output = document.getElementById('stt-output');
+                    if (output) output.textContent = transcript;
+                } else if (appState.activeFeature === 'Voice Assistant') {
+                    handleVoiceAssistantCommand(transcript);
+                } else if (appState.activeFeature === 'Voice Commands') {
+                    handleDedicatedVoiceCommand(transcript);
+                }
+            };
+        }
+
+        // --- CORE APP FLOW ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // New logo animation script
+            const people = document.querySelectorAll('.person');
+            people.forEach((person, index) => {
+                setTimeout(() => {
+                    person.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        person.style.transform = 'scale(1)';
+                    }, 300);
+                }, index * 300);
+            });
+            const circle = document.querySelector('#splash-screen .connecting-circle');
+            if(circle) {
+                setInterval(() => {
+                    circle.style.transform = 'scale(1.05)';
+                    circle.style.opacity = '0.9';
+                    setTimeout(() => {
+                        circle.style.transform = 'scale(1)';
+                        circle.style.opacity = '0.7';
+                    }, 800);
+                }, 3000);
+            }
+
+            // Existing app initialization
+            const splashScreen = document.getElementById('splash-screen');
+            splashScreen.addEventListener('animationend', () => {
+                document.getElementById('app-container').style.opacity = '1';
+            }, { once: true });
+            
+            if (appState.profile) {
+                fetchAndApplyUserSettings();
+                loadDashboard(appState.profile);
+            } else {
+                switchPage('home-page');
+            }
+        });
+
+        function switchPage(pageId) {
+            document.querySelectorAll('#app-container > section').forEach(section => {
+                section.classList.add('hidden'); section.classList.remove('flex');
+            });
+            const newPage = document.getElementById(pageId);
+            newPage.classList.remove('hidden'); newPage.classList.add('flex');
+        }
+
+        function selectProfile(profileType) {
+            appState.profile = profileType;
+            localStorage.setItem('allable-profile', profileType);
+            const isFirstTime = !localStorage.getItem(`allable-settings-${profileType}`);
+
+            if (isFirstTime) {
+                 switchPage('profile-setup-page');
+                 speak("Please choose your language preference.");
+            } else {
+                fetchAndApplyUserSettings();
+                loadDashboard(profileType);
+            }
+        }
+        
+        async function saveSettings() {
+            const language = document.getElementById('language-select').value;
+            appState.settings.lang = language;
+            localStorage.setItem(`allable-settings-${appState.profile}`, JSON.stringify({ language }));
+            await saveAccessibilitySettings(false);
+            loadDashboard(appState.profile);
+        }
+
+        function loadDashboard(profileType) {
+            appState.activeFeature = null;
+            const dashboardData = dashboards[profileType];
+            if (!dashboardData) return;
+            document.getElementById('dashboard-title').innerText = dashboardData.title;
+            const contentDiv = document.getElementById('dashboard-content');
+            contentDiv.innerHTML = ''; 
+            dashboardData.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = "card-bg p-4 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center text-center";
+                button.innerHTML = `<span class="text-5xl mb-3" role="img">${option.icon}</span><span class="text-lg font-semibold">${option.name}</span>`;
+                button.onclick = () => handleDashboardAction(option.name);
+                contentDiv.appendChild(button);
+            });
+            switchPage('dashboard-page');
+            speak(`Loading the ${dashboardData.title} dashboard.`);
+            fetchPredictiveShortcut();
+        }
+
+        function handleDashboardAction(actionName) {
+            logUsage(actionName);
+            speak(`Opening ${actionName}.`);
+            loadFeatureView(actionName);
+        }
+
+        // --- FEATURE VIEW LOADER (EXPANDED) ---
+        function loadFeatureView(featureName) {
+            appState.activeFeature = featureName;
+            const featureTitle = document.getElementById('feature-title');
+            const featureContent = document.getElementById('feature-content');
+            featureTitle.innerText = featureName;
+            featureContent.innerHTML = '';
+
+            switch (featureName) {
+                case 'Image-to-Speech':
+                    featureContent.innerHTML = `<div class="text-center"><video id="camera-feed" class="w-full h-64 bg-gray-800 rounded-lg mb-4 object-cover" autoplay playsinline></video><canvas id="camera-canvas" class="hidden"></canvas><button id="capture-btn" onclick="captureAndDescribe()" class="btn-primary font-bold py-4 px-8 rounded-lg mb-6 text-lg">Scan Scene</button><div id="scan-result" class="card-bg p-6 rounded-lg min-h-[100px] text-xl"></div></div>`;
+                    startCamera();
+                    break;
+                case 'Navigation Aid':
+                    featureContent.innerHTML = `<div class="text-center"><div id="nav-display" class="card-bg p-8 rounded-2xl mb-6 min-h-[150px] flex flex-col items-center justify-center"><p id="nav-instruction" class="text-2xl font-semibold"></p><p id="nav-icon" class="text-7xl my-2"></p><p id="nav-distance" class="text-lg text-gray-600"></p></div><button id="nav-button" onclick="startNavigation()" class="btn-primary font-bold py-4 px-8 rounded-lg text-lg">Start Navigation to Post Office</button></div>`;
+                    break;
+                case 'Read Document':
+                    featureContent.innerHTML = `<div class="text-center"><video id="camera-feed" class="w-full h-64 bg-gray-800 rounded-lg mb-4 object-cover" autoplay playsinline></video><canvas id="camera-canvas" class="hidden"></canvas><button id="capture-btn" onclick="captureAndRead()" class="btn-primary font-bold py-4 px-8 rounded-lg mb-6 text-lg">Scan Document</button><div id="doc-text-result" class="card-bg p-6 rounded-lg min-h-[200px] text-left text-base overflow-y-auto whitespace-pre-wrap"></div></div>`;
+                    startCamera();
+                    break;
+                case 'Text Translator':
+                    featureContent.innerHTML = `<div class="text-center"><video id="camera-feed" class="w-full h-64 bg-gray-800 rounded-lg mb-4 object-cover" autoplay playsinline></video><canvas id="camera-canvas" class="hidden"></canvas><button id="capture-btn" onclick="captureAndTranslate()" class="btn-primary font-bold py-4 px-8 rounded-lg mb-6 text-lg">Scan to Translate</button><div id="translation-result" class="card-bg p-6 rounded-lg min-h-[200px] text-left text-base overflow-y-auto"></div></div>`;
+                    startCamera();
+                    break;
+                case 'Voice Assistant':
+                    featureContent.innerHTML = `<div class="text-center"><button id="va-listen-btn" onclick="startListening()" class="btn-primary font-bold py-4 px-8 rounded-lg mb-6 text-lg">Ask a Question</button><div class="card-bg p-6 rounded-lg"><p class="text-gray-600 mb-2">Your question:</p><p id="va-question" class="min-h-[30px] text-xl font-semibold"></p><hr class="my-4"><p class="text-gray-600 mb-2">ALLABLE's answer:</p><p id="va-answer" class="min-h-[60px] text-xl"></p></div></div>`;
+                    break;
+                case 'Text-to-Icon':
+                    featureContent.innerHTML = `<div><textarea id="tti-input" class="w-full h-32 p-3 bg-gray-100 rounded-lg text-lg" placeholder="Enter text here..."></textarea><button onclick="convertTextToIcons()" class="w-full btn-primary font-bold py-3 rounded-lg text-lg mt-4">Convert to Icons</button><div id="tti-output" class="card-bg p-6 rounded-lg mt-6 min-h-[80px] text-5xl"></div></div>`;
+                    break;
+                case 'Voice Commands':
+                    featureContent.innerHTML = `<div class="text-center"><div class="card-bg p-6 rounded-lg mb-6"><h3 class="text-xl font-semibold mb-3">Try saying...</h3><p class="text-lg">"Find hospital"</p><p class="text-lg">"Call my family"</p><p class="text-lg">"Read the news"</p></div><button id="vc-listen-btn" onclick="startListening()" class="btn-primary font-bold py-4 px-8 rounded-lg text-lg">Start Listening</button><p id="vc-status" class="mt-4 text-lg min-h-[30px]"></p></div>`;
+                    speak("Say a command to control the app.");
+                    break;
+                case 'Volunteer Connect':
+                    featureContent.innerHTML = `<div class="text-center"><img src="https://placehold.co/600x300/e0f2f1/1a3a3a?text=Map+of+Kalya" alt="Map of Kalya" class="w-full h-48 object-cover rounded-lg mb-6"><div id="volunteer-list" class="space-y-4 text-left"></div></div>`;
+                    loadVolunteers();
+                    break;
+                case 'Voice News':
+                    featureContent.innerHTML = `<div id="news-container" class="space-y-4"></div>`;
+                    fetchNews();
+                    break;
+                case 'Reminders':
+                    featureContent.innerHTML = `<div class="card-bg p-6 rounded-lg mb-6"><input id="reminder-text" type="text" placeholder="e.g., Take medicine" class="w-full p-3 mb-3 bg-gray-100 rounded text-lg"><input id="reminder-time" type="time" class="w-full p-3 mb-3 bg-gray-100 rounded text-lg"><button onclick="addReminder()" class="w-full btn-primary font-bold py-3 rounded-lg text-lg">Set Reminder</button></div><div id="reminders-list" class="space-y-3"></div>`;
+                    displayReminders();
+                    break;
+                case 'Quick Calls':
+                    featureContent.innerHTML = `<div class="grid grid-cols-1 gap-6"><button onclick="simulateCall('Family')" class="card-bg p-8 rounded-2xl text-2xl font-semibold flex items-center justify-center"><span class="mr-4 text-4xl">👨‍👩‍👧</span>Family</button><button onclick="simulateCall('Doctor')" class="card-bg p-8 rounded-2xl text-2xl font-semibold flex items-center justify-center"><span class="mr-4 text-4xl">🧑‍⚕️</span>Doctor</button><button onclick="simulateCall('Emergency Services')" class="card-bg p-8 rounded-2xl text-2xl font-semibold flex items-center justify-center bg-red-100"><span class="mr-4 text-4xl">🚑</span>Emergency</button></div>`;
+                    break;
+                case 'Health Monitor':
+                    featureContent.innerHTML = `<div class="space-y-6"><div class="grid grid-cols-2 gap-6 text-center"><div class="card-bg p-6 rounded-xl"><p class="text-lg text-gray-600">Heart Rate</p><p id="health-hr" class="text-5xl font-bold">--</p><p>BPM</p></div><div class="card-bg p-6 rounded-xl"><p class="text-lg text-gray-600">Blood Pressure</p><p id="health-bp" class="text-5xl font-bold">--/--</p><p>mmHg</p></div></div><button onclick="measureVitals()" class="w-full btn-primary font-bold py-4 rounded-lg text-lg">Measure Vitals</button></div>`;
+                    measureVitals();
+                    break;
+                case 'Speech-to-Text':
+                    featureContent.innerHTML = `<div class="text-center"><button id="stt-listen-btn" onclick="startListening()" class="btn-primary font-bold py-4 px-8 rounded-lg mb-6 text-lg">Start Listening</button><div class="card-bg p-6 rounded-lg"><p class="text-gray-600 mb-2">Transcribed Text:</p><p id="stt-output" class="min-h-[120px] text-2xl"></p></div></div>`;
+                    break;
+                case 'Sign-to-Speech':
+                    featureContent.innerHTML = `<div class="text-center"><video id="camera-feed" class="w-full h-64 bg-gray-800 rounded-lg mb-4 object-cover transform -scale-x-100" autoplay playsinline></video><canvas id="camera-canvas" class="hidden"></canvas><div class="card-bg p-6 rounded-lg"><p class="text-gray-600 mb-2">Recognized Word:</p><p id="sign-output" class="min-h-[40px] text-3xl font-bold"></p></div></div>`;
+                    startSignRecognition();
+                    break;
+                case 'Symbol Chatboard':
+                    featureContent.innerHTML = `<div id="symbol-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-4"></div>`;
+                    loadSymbolChatboard();
+                    break;
+                case 'Emergency Alert':
+                    featureContent.innerHTML = `<div class="text-center flex flex-col items-center justify-center h-full"><p class="text-8xl mb-4">✅</p><h3 class="text-4xl font-bold text-red-600">Alert Sent</h3><p class="text-lg mt-2 text-gray-700">Your location and profile have been shared with your emergency contacts.</p></div>`;
+                    activateSOS(false);
+                    break;
+                default:
+                    featureContent.innerHTML = `<p class="text-center text-gray-600 text-lg">This feature is coming soon.</p>`;
+            }
+            switchPage('feature-view-page');
+        }
+        
+        // --- REAL AI & FEATURE IMPLEMENTATIONS ---
+        async function startCamera(facingMode = 'environment') {
+            const videoElement = document.getElementById('camera-feed');
+            if (!videoElement) return;
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    if (appState.cameraStream) {
+                        appState.cameraStream.getTracks().forEach(track => track.stop());
+                    }
+                    appState.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode } });
+                    videoElement.srcObject = appState.cameraStream;
+                } catch (err) {
+                    console.error("Error accessing camera:", err);
+                    speak("Could not access the camera. Please grant permission.");
+                }
+            }
+        }
+        
+        function stopCamera() {
+            if (appState.cameraStream) {
+                appState.cameraStream.getTracks().forEach(track => track.stop());
+                appState.cameraStream = null;
+            }
+            if (appState.signRecognitionInterval) {
+                clearInterval(appState.signRecognitionInterval);
+                appState.signRecognitionInterval = null;
+            }
+        }
+
+        async function startSignRecognition() {
+            await startCamera('user');
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('camera-canvas');
+            const outputDiv = document.getElementById('sign-output');
+
+            speak("Camera started. Please make a sign.");
+
+            appState.signRecognitionInterval = setInterval(async () => {
+                if (!video || video.readyState < 2) return;
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = canvas.toDataURL('image/jpeg');
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/sign-to-speech`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageData })
+                    });
+                    if (!response.ok) return;
+                    const data = await response.json();
+                    const word = data.word;
+                    if (outputDiv) outputDiv.textContent = word;
+                    if (word && word !== "No sign detected" && word !== appState.lastSpokenWord) {
+                        speak(word);
+                        appState.lastSpokenWord = word;
+                    } else if (word === "No sign detected") {
+                        appState.lastSpokenWord = "";
+                    }
+                } catch (error) {
+                    console.error("Sign recognition error:", error);
+                }
+            }, 1000);
+        }
+
+        async function captureAndDescribe() {
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('camera-canvas');
+            const resultDiv = document.getElementById('scan-result');
+            const captureBtn = document.getElementById('capture-btn');
+            if (!video || !canvas || !resultDiv || !captureBtn) return;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+            resultDiv.innerText = 'Analyzing scene...';
+            speak("Analyzing, please wait.");
+            captureBtn.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/image-to-speech`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imageData })
+                });
+                if (!response.ok) throw new Error('Server returned an error.');
+                const data = await response.json();
+                const caption = data.caption || 'Could not describe the image.';
+                resultDiv.innerText = caption;
+                speak(caption);
+            } catch (error) {
+                resultDiv.innerText = 'Sorry, something went wrong. Please try again.';
+                speak('Sorry, something went wrong.');
+            } finally {
+                captureBtn.disabled = false;
+            }
+        }
+
+        async function captureAndRead() {
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('camera-canvas');
+            const resultDiv = document.getElementById('doc-text-result');
+            const captureBtn = document.getElementById('capture-btn');
+            if (!video || !canvas || !resultDiv || !captureBtn) return;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+            resultDiv.innerText = 'Reading document...';
+            speak("Reading document, please wait.");
+            captureBtn.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/read-document`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imageData })
+                });
+                if (!response.ok) throw new Error('Server returned an error.');
+                const data = await response.json();
+                const extractedText = data.text || 'Could not read the document.';
+                resultDiv.innerText = extractedText;
+                speak("Reading complete. Here is the text.");
+                setTimeout(() => speak(extractedText, { cancelPrev: false }), 1500);
+            } catch (error) {
+                resultDiv.innerText = 'Sorry, something went wrong. Please try again.';
+                speak('Sorry, something went wrong.');
+            } finally {
+                captureBtn.disabled = false;
+            }
+        }
+
+        async function captureAndTranslate() {
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('camera-canvas');
+            const resultDiv = document.getElementById('translation-result');
+            const captureBtn = document.getElementById('capture-btn');
+            if (!video || !canvas || !resultDiv || !captureBtn) return;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+            resultDiv.innerHTML = '<p>Translating text...</p>';
+            speak("Scanning and translating, please wait.");
+            captureBtn.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/text-translator`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imageData, language: appState.settings.lang })
+                });
+                if (!response.ok) throw new Error('Server returned an error during translation.');
+                const data = await response.json();
+                const originalText = data.original || 'Original text not found.';
+                const translatedText = data.translated || 'Could not translate the text.';
+                resultDiv.innerHTML = `
+                    <div class="mb-4">
+                        <h4 class="font-bold text-lg border-b pb-1 mb-2">Original Text</h4>
+                        <p class="whitespace-pre-wrap">${originalText}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg border-b pb-1 mb-2">Translated Text</h4>
+                        <p class="whitespace-pre-wrap font-semibold">${translatedText}</p>
+                    </div>
+                `;
+                speak(translatedText);
+            } catch (error) {
+                resultDiv.innerText = 'Sorry, the translation failed. Please try again.';
+                speak('Sorry, the translation failed.');
+                console.error("Translation Error:", error);
+            } finally {
+                captureBtn.disabled = false;
+            }
+        }
+        
+        async function convertTextToIcons() {
+            const textInput = document.getElementById('tti-input');
+            const outputDiv = document.getElementById('tti-output');
+            if (!textInput || !outputDiv) return;
+            const text = textInput.value;
+            if (!text.trim()) {
+                speak("Please enter some text to convert.");
+                return;
+            }
+            outputDiv.innerText = 'Converting...';
+            speak("Looking for icons.");
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/text-to-icon`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                if (!response.ok) throw new Error('Server returned an error.');
+                const data = await response.json();
+                if (data.icons) {
+                    outputDiv.innerText = data.icons;
+                    if (data.found_words && data.found_words.length > 0) {
+                        speak(`Found icons for: ${data.found_words.join(', ')}`);
+                    } else {
+                        speak("No specific icons were found for the text.");
+                    }
+                } else {
+                    outputDiv.innerText = 'No icons found.';
+                    speak("No icons were found for the text you entered.");
+                }
+            } catch (error) {
+                console.error("Text-to-Icon Error:", error);
+                outputDiv.innerText = 'Conversion failed. Please try again.';
+                speak("Sorry, the conversion failed.");
+            }
+        }
+
+        async function handleDedicatedVoiceCommand(command) {
+            const statusDiv = document.getElementById('vc-status');
+            const listenBtn = document.getElementById('vc-listen-btn');
+            if (!statusDiv || !listenBtn) return;
+            statusDiv.innerText = `You said: "${command}"\nThinking...`;
+            listenBtn.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/recognize-command`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command })
+                });
+                if (!response.ok) throw new Error('Server could not recognize the command.');
+                const data = await response.json();
+                const intent = data.intent;
+                let actionFeedback = `Command recognized: ${command}. `;
+                switch (intent) {
+                    case 'find_hospital':
+                        actionFeedback += "Action: Showing directions to the nearest hospital.";
+                        break;
+                    case 'call_family':
+                        actionFeedback += "Action: Opening phone to call your family.";
+                        break;
+                    case 'read_news':
+                        actionFeedback += "Action: Opening the Voice News feature.";
+                        loadFeatureView('Voice News');
+                        break;
+                    case 'open_translator':
+                        actionFeedback += "Action: Opening the Text Translator.";
+                        loadFeatureView('Text Translator');
+                        break;
+                    case 'go_home':
+                        actionFeedback += "Action: Returning to the dashboard.";
+                        loadDashboard(appState.profile);
+                        break;
+                    default:
+                        actionFeedback = `Sorry, I didn't understand the command: "${command}". Please try again.`;
+                }
+                statusDiv.innerText = actionFeedback;
+                speak(actionFeedback);
+            } catch (error) {
+                const errorMessage = "Sorry, I had trouble understanding. Please try again.";
+                statusDiv.innerText = errorMessage;
+                speak(errorMessage);
+                console.error("Voice Command Error:", error);
+            } finally {
+                listenBtn.disabled = false;
+            }
+        }
+        
+        async function fetchNews() {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '<p>Fetching the latest news...</p>';
+            speak("Fetching the latest news, please wait.");
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/news`);
+                if (!response.ok) throw new Error('Could not fetch news from the server.');
+                const data = await response.json();
+                if (data.status !== 'ok' || !data.articles || data.articles.length === 0) {
+                    throw new Error('No news articles found.');
+                }
+                newsContainer.innerHTML = '';
+                speak("Here are the top headlines.");
+                data.articles.forEach(article => {
+                    const articleEl = document.createElement('div');
+                    articleEl.className = 'card-bg p-4 rounded-lg cursor-pointer hover:bg-white/90';
+                    articleEl.innerHTML = `<h3 class="font-semibold text-lg">${article.title}</h3><p class="text-sm text-gray-600">${article.source.name}</p>`;
+                    articleEl.onclick = () => speak(article.title);
+                    newsContainer.appendChild(articleEl);
+                });
+            } catch (error) {
+                console.error("News Fetch Error:", error);
+                newsContainer.innerHTML = `<p>Sorry, could not load the news at this time.</p>`;
+                speak("Sorry, I could not load the news right now.");
+            }
+        }
+
+        function loadVolunteers() {
+            const list = document.getElementById('volunteer-list');
+            if (!list) return;
+            const volunteers = [
+                { name: 'Priya S.', distance: '50m away' },
+                { name: 'Anil Kumar', distance: '120m away' },
+                { name: 'Sunita G.', distance: '200m away' },
+            ];
+            list.innerHTML = '';
+            speak("Finding nearby volunteers.");
+            volunteers.forEach(v => {
+                const item = document.createElement('div');
+                item.className = 'card-bg p-4 rounded-lg flex justify-between items-center';
+                item.innerHTML = `<div><p class="font-bold text-lg">${v.name}</p><p class="text-sm text-gray-600">${v.distance}</p></div><button onclick="connectWithVolunteer('${v.name}')" class="btn-accent px-4 py-2 rounded-lg font-semibold">Connect</button>`;
+                list.appendChild(item);
+            });
+        }
+
+        function connectWithVolunteer(name) {
+            speak(`Connecting you with ${name}. They have been notified and will be in touch shortly.`);
+        }
+        
+        function addReminder() {
+            const textInput = document.getElementById('reminder-text');
+            const timeInput = document.getElementById('reminder-time');
+            if (!textInput || !timeInput) return;
+            const text = textInput.value;
+            const time = timeInput.value;
+            if (text && time) {
+                appState.reminders.push({ text, time, id: Date.now() });
+                localStorage.setItem('allable-reminders', JSON.stringify(appState.reminders));
+                displayReminders(); 
+                speak(`Reminder set for ${text} at ${time}.`);
+                textInput.value = ''; 
+                timeInput.value = '';
+            } else { 
+                speak("Please enter both a reminder and a time."); 
+            }
+        }
+
+        function displayReminders() {
+            const listDiv = document.getElementById('reminders-list');
+            if (!listDiv) return;
+            listDiv.innerHTML = '';
+            if (appState.reminders.length === 0) {
+                listDiv.innerHTML = `<p class="text-center text-gray-600">No reminders set.</p>`;
+                return;
+            }
+            appState.reminders.sort((a,b) => a.time.localeCompare(b.time)).forEach(reminder => {
+                const reminderEl = document.createElement('div');
+                reminderEl.className = 'card-bg p-4 rounded-lg flex justify-between items-center';
+                reminderEl.innerHTML = `<span><strong class="text-lg">${reminder.time}</strong> - ${reminder.text}</span><button onclick="deleteReminder(${reminder.id})" class="text-red-500 hover:text-red-700 font-bold text-xl">✖</button>`;
+                listDiv.appendChild(reminderEl);
+            });
+        }
+        
+        function deleteReminder(id) {
+            appState.reminders = appState.reminders.filter(r => r.id !== id);
+            localStorage.setItem('allable-reminders', JSON.stringify(appState.reminders));
+            displayReminders();
+            speak("Reminder removed.");
+        }
+
+        function simulateCall(contact) { 
+            speak(`Calling ${contact}.`); 
+        }
+        
+        function measureVitals() {
+            speak("Measuring your vitals. Please wait.");
+            const hrDiv = document.getElementById('health-hr');
+            const bpDiv = document.getElementById('health-bp');
+            if (!hrDiv || !bpDiv) return;
+            hrDiv.innerText = '...';
+            bpDiv.innerText = '...';
+            setTimeout(() => {
+                const heartRate = Math.floor(Math.random() * (85 - 65 + 1)) + 65;
+                const sys = Math.floor(Math.random() * (130 - 110 + 1)) + 110;
+                const dia = Math.floor(Math.random() * (85 - 75 + 1)) + 75;
+                hrDiv.innerText = heartRate;
+                bpDiv.innerText = `${sys}/${dia}`;
+                speak(`Your heart rate is ${heartRate} beats per minute. Blood pressure is ${sys} over ${dia}.`);
+            }, 2500);
+        }
+
+        async function startNavigation() {
+            const navButton = document.getElementById('nav-button');
+            const navInstruction = document.getElementById('nav-instruction');
+            navInstruction.textContent = "Getting your location...";
+            speak("Getting your location, please wait.");
+            navButton.disabled = true;
+            if (!navigator.geolocation) {
+                navInstruction.textContent = "Location access is not available.";
+                speak("Location access is not available.");
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+                navInstruction.textContent = "Calculating route...";
+                speak("Calculating route to the Kalya Post Office.");
+                try {
+                    // This function is missing from the Node.js code, so it needs to be added to Flask.
+                    // Assuming it will be available at /api/get-directions
+                    const response = await fetch(`${API_BASE_URL}/api/get-directions`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ latitude, longitude })
+                    });
+                    if (!response.ok) throw new Error('Could not get directions from server.');
+                    const data = await response.json();
+                    appState.navigation.route = data.steps; // Assuming the flask server returns a 'steps' key
+                    appState.navigation.currentStep = 0;
+                    navButton.textContent = "Next Step";
+                    navButton.onclick = handleNavigation;
+                    updateNavDisplay();
+                } catch (error) {
+                    navInstruction.textContent = "Sorry, could not calculate the route. Please try again.";
+                    speak("Sorry, could not calculate the route.");
+                } finally {
+                    navButton.disabled = false;
+                }
+            }, (error) => {
+                navInstruction.textContent = "Could not get your location. Please enable location services.";
+                speak("Could not get your location.");
+                navButton.disabled = false;
+            });
+        }
+        
+        function updateNavDisplay() {
+            const navInstruction = document.getElementById('nav-instruction');
+            const navIcon = document.getElementById('nav-icon');
+            const navDistance = document.getElementById('nav-distance');
+            const navButton = document.getElementById('nav-button');
+            const route = appState.navigation.route;
+            const stepIndex = appState.navigation.currentStep;
+            if (!route || route.length === 0) {
+                navInstruction.textContent = "No route available."; return;
+            }
+            if (stepIndex >= route.length) {
+                navInstruction.textContent = "You have arrived at your destination.";
+                navIcon.textContent = "🎯"; navButton.disabled = true; return;
+            }
+            const step = route[stepIndex];
+            navInstruction.textContent = step.instruction;
+            navIcon.textContent = step.icon;
+            navDistance.textContent = step.distance;
+            speak(step.instruction);
+        }
+
+        function handleNavigation() {
+            appState.navigation.currentStep++;
+            updateNavDisplay();
+        }
+        
+        function startListening() {
+            if (!recognition) {
+                speak("Sorry, speech recognition is not available on this device.");
+                return;
+            }
+            let listenBtn, defaultText;
+            if (appState.activeFeature === 'Speech-to-Text') {
+                listenBtn = document.getElementById('stt-listen-btn');
+                defaultText = 'Start Listening';
+            } else if (appState.activeFeature === 'Voice Assistant') {
+                listenBtn = document.getElementById('va-listen-btn');
+                defaultText = 'Ask a Question';
+            } else if (appState.activeFeature === 'Voice Commands') {
+                listenBtn = document.getElementById('vc-listen-btn');
+                defaultText = 'Start Listening';
+            }
+
+            speak("Listening now.");
+            if (listenBtn) {
+                listenBtn.textContent = 'Listening...';
+                listenBtn.disabled = true;
+            }
+            
+            recognition.lang = appState.settings.lang;
+            recognition.start();
+
+            recognition.onend = () => {
+                if (listenBtn) {
+                    listenBtn.textContent = defaultText;
+                    listenBtn.disabled = false;
+                }
+            };
+        }
+        
+        async function handleVoiceAssistantCommand(command) {
+            document.getElementById('va-question').innerText = `"${command}"`;
+            const answerDiv = document.getElementById('va-answer');
+            answerDiv.innerText = 'Thinking...';
+            speak("Thinking...");
+            try {
+                 // This function is missing from the Node.js code, so it needs to be added to Flask.
+                 // Assuming it will be available at /api/voice-assistant
+                const response = await fetch(`${API_BASE_URL}/api/voice-assistant`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: command })
+                });
+                if (!response.ok) throw new Error("The server couldn't answer.");
+                const data = await response.json();
+                const answer = data.answer || "I'm sorry, I couldn't find an answer.";
+                answerDiv.innerText = answer;
+                speak(answer);
+            } catch (error) {
+                const errorMessage = "Sorry, I'm having trouble connecting. Please try again.";
+                answerDiv.innerText = errorMessage;
+                speak(errorMessage);
+            } finally {
+                const btn = document.getElementById('va-listen-btn');
+                if(btn) btn.disabled = false;
+            }
+        }
+        
+        function loadSymbolChatboard() {
+            const grid = document.getElementById('symbol-grid');
+            if (!grid) return;
+            
+            const symbols = [
+                { symbol: '💧', word: 'Water' }, { symbol: '🍔', word: 'Food' },
+                { symbol: '🏠', word: 'Home' }, { symbol: '🚽', word: 'Restroom' },
+                { symbol: '✅', word: 'Yes' }, { symbol: '❌', word: 'No' },
+                { symbol: '❤️', word: 'Thank you' }, { symbol: '🆘', word: 'Help' },
+                { symbol: '😊', word: 'Happy' }, { symbol: '😢', word: 'Sad' },
+                { symbol: '💰', word: 'Money' }, { symbol: '⏰', word: 'Time' },
+            ];
+            
+            grid.innerHTML = '';
+            speak("Symbol chatboard opened. Tap a symbol to speak.");
+
+            symbols.forEach(({ symbol, word }) => {
+                const button = document.createElement('button');
+                button.className = 'card-bg p-4 rounded-2xl text-center transform hover:scale-105 transition-transform';
+                button.innerHTML = `<p class="text-6xl">${symbol}</p><p class="font-semibold mt-2">${word}</p>`;
+                button.onclick = () => speak(word);
+                grid.appendChild(button);
+            });
+        }
+
+        // --- UTILITY AND API FUNCTIONS ---
+        function handleFeatureBack() {
+            stopCamera();
+            loadDashboard(appState.profile);
+        }
+
+        function showHomePage() {
+            localStorage.removeItem('allable-profile');
+            appState.profile = null; switchPage('home-page'); speak("Returning to the home screen.");
+        }
+
+        function speak(text, options = {}) {
+            const { cancelPrev = true, rate = appState.settings.voiceSpeed, pitch = appState.settings.voicePitch } = options;
+            if ('speechSynthesis' in window) {
+                if(cancelPrev) speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = appState.settings.lang;
+                utterance.rate = parseFloat(rate); utterance.pitch = parseFloat(pitch);
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        async function fetchPredictiveShortcut() {
+            if (!appState.profile) {
+                document.getElementById('predictive-shortcut-container').classList.add('hidden'); return;
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/predictive-shortcut/${appState.userId}?profileType=${appState.profile}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                if (data.predicted_feature) {
+                    const btn = document.getElementById('predictive-shortcut-btn');
+                    btn.innerText = `Go to ${data.predicted_feature}`;
+                    btn.onclick = () => handleDashboardAction(data.predicted_feature);
+                    document.getElementById('predictive-shortcut-container').classList.remove('hidden');
+                } else { document.getElementById('predictive-shortcut-container').classList.add('hidden'); }
+            } catch (error) { 
+                document.getElementById('predictive-shortcut-container').classList.add('hidden');
+            }
+        }
+
+        async function logUsage(feature, trigger = 'tap', command = null) {
+            fetch(`${API_BASE_URL}/api/log-usage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: appState.userId, profileType: appState.profile, featureUsed: feature, triggerMethod: trigger, rawVoiceCommand: command }), });
+        }
+
+        function activateSOS(withSpeak = true) {
+             if(withSpeak) speak("SOS activated. Sharing your location with emergency contacts.");
+             if ('geolocation' in navigator) {
+                 navigator.geolocation.getCurrentPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    fetch(`${API_BASE_URL}/api/sos`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: appState.userId, latitude, longitude }), });
+                }, () => { if(withSpeak) speak("Could not get your location. Please enable location services."); });
+            }
+        }
+
+        function openSettingsModal() {
+            document.getElementById('voice-speed').value = appState.settings.voiceSpeed;
+            document.getElementById('voice-pitch').value = appState.settings.voicePitch;
+            document.getElementById('font-size').value = appState.settings.fontSize;
+            document.getElementById('contrast-theme').value = appState.settings.contrastTheme;
+            document.getElementById('settings-modal').classList.remove('hidden');
+
+        }
+
+        function closeSettingsModal() { document.getElementById('settings-modal').classList.add('hidden'); }
+
+        async function saveAccessibilitySettings(showAlert = true) {
+            appState.settings.voiceSpeed = document.getElementById('voice-speed').value;
+            appState.settings.voicePitch = document.getElementById('voice-pitch').value;
+            appState.settings.fontSize = document.getElementById('font-size').value;
+            appState.settings.contrastTheme = document.getElementById('contrast-theme').value;
+            applyAccessibilitySettings();
+            await fetch(`${API_BASE_URL}/api/user-preferences/${appState.userId}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: appState.userId, profileType: appState.profile, ...appState.settings }) });
+            if (showAlert) speak("Settings saved.");
+            closeSettingsModal();
+        }
+
+        function applyAccessibilitySettings() {
+            const root = document.documentElement;
+            root.style.setProperty('--font-size', `${appState.settings.fontSize}px`);
+            root.classList.toggle('high-contrast', appState.settings.contrastTheme === 'high-contrast');
+        }
+
+        async function fetchAndApplyUserSettings() {
+             try {
+                const response = await fetch(`${API_BASE_URL}/api/user-preferences/${appState.userId}`); if (!response.ok) return;
+                const data = await response.json();
+                appState.settings.lang = data.language || 'en-US';
+                appState.settings.voiceSpeed = data.voiceSpeed || 1.0;
+                appState.settings.voicePitch = data.voicePitch || 1.0;
+                appState.settings.fontSize = data.fontSize || 16;
+                appState.settings.contrastTheme = data.contrastTheme || 'default';
+                applyAccessibilitySettings();
+            } catch (error) { console.warn('Could not fetch user settings:', error); }
+        }
+    </script>
+</body>
+</html>
+
